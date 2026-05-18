@@ -1,6 +1,27 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const galleryImages: string[] = [
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+    "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+    "https://images.unsplash.com/photo-1445019980597-93fa8acb246c"
+  ];
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "12px",
+    margin: "10px 0",
+    border: "none",
+    borderRadius: "6px"
+  };
+
   return (
-    <main style={{ fontFamily: "Arial", margin: 0 }}>
+    <main style={{ fontFamily: "Arial", margin: 0, background: "#fff" }}>
 
       {/* NAVBAR */}
       <nav style={{
@@ -9,16 +30,29 @@ export default function Home() {
         width: "100%",
         display: "flex",
         justifyContent: "space-between",
-        padding: "15px 30px",
-        background: "rgba(0,0,0,0.7)",
+        padding: "18px 40px",
+        background: "rgba(0,0,0,0.85)",
         color: "white",
-        zIndex: 1000
+        zIndex: 1000,
+        backdropFilter: "blur(10px)"
       }}>
-        <h2>Hotel Vardhan</h2>
+        <h2 style={{ letterSpacing: "2px" }}>HOTEL VARDHAN</h2>
+
         <div>
-          <a href="#rooms" style={{ marginRight: "20px", color: "white", textDecoration: "none" }}>Rooms</a>
-          <a href="#booking" style={{ marginRight: "20px", color: "white", textDecoration: "none" }}>Booking</a>
-          <a href="#contact" style={{ color: "white", textDecoration: "none" }}>Contact</a>
+          {["Rooms", "Amenities", "Gallery", "Booking"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              style={{
+                marginRight: "18px",
+                color: "white",
+                textDecoration: "none",
+                fontSize: "14px"
+              }}
+            >
+              {item}
+            </a>
+          ))}
         </div>
       </nav>
 
@@ -26,105 +60,197 @@ export default function Home() {
       <section style={{
         height: "100vh",
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb')",
+          "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        color: "white",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        color: "white",
         textAlign: "center",
         paddingTop: "60px"
       }}>
-        <h1 style={{ fontSize: "60px", fontWeight: "bold" }}>
-          Hotel Vardhan 🏨
+        <h1 style={{ fontSize: "70px", letterSpacing: "3px" }}>
+          HOTEL VARDHAN
         </h1>
 
-        <p style={{ fontSize: "20px", marginTop: "10px" }}>
-          Luxury • Comfort • Experience
+        <p style={{ fontSize: "22px", opacity: 0.9 }}>
+          Luxury • Comfort • Royal Experience
         </p>
 
-        <a
-          href="https://wa.me/919999999999?text=Hello%20I%20want%20to%20book%20a%20room%20in%20Hotel%20Vardhan"
-          target="_blank"
-          style={{
-            marginTop: "20px",
+        <div style={{ marginTop: "25px", display: "flex", gap: "15px" }}>
+          <a href="#booking" style={{
             padding: "14px 28px",
-            background: "gold",
+            background: "#c9a24e",
             color: "black",
-            borderRadius: "8px",
             fontWeight: "bold",
+            borderRadius: "6px",
             textDecoration: "none"
-          }}
-        >
-          Book Now on WhatsApp
-        </a>
+          }}>
+            Book Now
+          </a>
+
+          <a href="#rooms" style={{
+            padding: "14px 28px",
+            border: "1px solid white",
+            color: "white",
+            borderRadius: "6px",
+            textDecoration: "none"
+          }}>
+            Explore Rooms
+          </a>
+        </div>
       </section>
 
       {/* ROOMS */}
-      <section id="rooms" style={{ padding: "60px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "40px" }}>Our Rooms 🛏️</h2>
+      <section id="rooms" style={{ padding: "80px 40px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "42px" }}>Luxury Rooms</h2>
 
         <div style={{
           display: "flex",
           justifyContent: "center",
-          gap: "20px",
+          gap: "25px",
           flexWrap: "wrap",
-          marginTop: "30px"
+          marginTop: "40px"
         }}>
-
-          <div style={{
-            width: "250px",
-            padding: "20px",
-            border: "1px solid #ddd",
-            borderRadius: "10px"
-          }}>
-            <h3>Deluxe Room</h3>
-            <p>₹2999 / night</p>
-          </div>
-
-          <div style={{
-            width: "250px",
-            padding: "20px",
-            border: "1px solid #ddd",
-            borderRadius: "10px"
-          }}>
-            <h3>Premium Room</h3>
-            <p>₹4999 / night</p>
-          </div>
-
-          <div style={{
-            width: "250px",
-            padding: "20px",
-            border: "1px solid #ddd",
-            borderRadius: "10px"
-          }}>
-            <h3>Luxury Suite</h3>
-            <p>₹7999 / night</p>
-          </div>
-
+          {[
+            ["Deluxe Room", "₹2999", "Comfort & elegance combined"],
+            ["Premium Room", "₹4999", "Perfect for business stays"],
+            ["Luxury Suite", "₹7999", "Royal experience stay"]
+          ].map(([title, price, desc]) => (
+            <div key={title} style={{
+              width: "280px",
+              padding: "25px",
+              borderRadius: "12px",
+              border: "1px solid #eee",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.05)"
+            }}>
+              <h3>{title}</h3>
+              <p style={{ color: "#c9a24e", fontWeight: "bold" }}>{price} / night</p>
+              <p style={{ fontSize: "14px", color: "#555" }}>{desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* BOOKING */}
-      <section id="booking" style={{ padding: "60px", background: "#f5f5f5", textAlign: "center" }}>
-        <h2 style={{ fontSize: "40px" }}>Book Your Stay 📞</h2>
+      {/* AMENITIES */}
+      <section id="amenities" style={{ padding: "80px 40px", background: "#f8f8f8", textAlign: "center" }}>
+        <h2 style={{ fontSize: "42px" }}>Amenities</h2>
 
-        <div style={{ maxWidth: "400px", margin: "auto" }}>
-          <input placeholder="Name" style={{ width: "100%", padding: "10px", margin: "10px 0" }} />
-          <input placeholder="Phone" style={{ width: "100%", padding: "10px", margin: "10px 0" }} />
-          <input placeholder="Date" style={{ width: "100%", padding: "10px", margin: "10px 0" }} />
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "20px",
+          marginTop: "40px"
+        }}>
+          {[
+            "Free WiFi",
+            "Swimming Pool",
+            "Restaurant",
+            "Room Service",
+            "24/7 Support",
+            "Parking Facility"
+          ].map((a) => (
+            <div key={a} style={{
+              padding: "20px",
+              background: "white",
+              borderRadius: "10px",
+              boxShadow: "0 5px 15px rgba(0,0,0,0.05)"
+            }}>
+              {a}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* GALLERY */}
+      <section id="gallery" style={{ padding: "80px 40px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "42px" }}>Gallery</h2>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "15px",
+          marginTop: "40px"
+        }}>
+          {galleryImages.map((img, i) => (
+            <div
+              key={i}
+              onClick={() => setSelectedImage(img)}
+              style={{
+                cursor: "pointer",
+                borderRadius: "10px",
+                overflow: "hidden"
+              }}
+            >
+              <img
+                src={img}
+                alt="hotel gallery"
+                style={{
+                  width: "100%",
+                  height: "220px",
+                  objectFit: "cover",
+                  display: "block"
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* LIGHTBOX */}
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.92)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 99999
+          }}
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedImage}
+              alt="selected hotel"
+              style={{
+                maxWidth: "90vw",
+                maxHeight: "90vh",
+                borderRadius: "12px",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.6)"
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* BOOKING */}
+      <section id="booking" style={{ padding: "80px 40px", background: "#111", color: "white", textAlign: "center" }}>
+        <h2 style={{ fontSize: "42px" }}>Book Your Stay</h2>
+
+        <div style={{ maxWidth: "450px", margin: "auto", marginTop: "30px" }}>
+          <input placeholder="Name" style={inputStyle} type="text" />
+          <input placeholder="Phone" style={inputStyle} type="tel" />
+          <input placeholder="Check-in Date" style={inputStyle} type="date" />
 
           <button style={{
             width: "100%",
-            padding: "12px",
-            background: "black",
-            color: "white",
+            padding: "14px",
+            background: "#c9a24e",
+            color: "black",
             border: "none",
-            cursor: "pointer"
+            fontWeight: "bold",
+            cursor: "pointer",
+            marginTop: "10px"
           }}>
-            Book Now
+            Confirm Booking
           </button>
         </div>
       </section>
@@ -133,10 +259,10 @@ export default function Home() {
       <footer style={{
         textAlign: "center",
         padding: "30px",
-        background: "#111",
+        background: "#000",
         color: "white"
       }}>
-        <p>© 2026 Hotel Vardhan. All rights reserved.</p>
+        <p>© 2026 Hotel Vardhan | Luxury Redefined</p>
       </footer>
 
     </main>
